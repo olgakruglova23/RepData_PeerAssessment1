@@ -62,19 +62,16 @@ summarise(steps.by.day, mean = mean(x), median = median(x))
 Now, let us look at the average number of steps over time dependance.
 
 ```r
-by.interval <- group_by(without.NA, interval)
-average <- summarise(by.interval, mean = mean(steps))
+average <- aggregate(without.NA$steps, by = list(without.NA$interval), FUN  = sum)
 ```
 
 
 
 ```r
-plot(average$interval, average$mean, type = "l", xlab = "Time interval, s", ylab = "Mean value of steps across all days, arb units", main = "The average number of steps taken in 5 minutes interval")
+plot(average$Group.1, average$x, type = "l", xlab = "Time interval, s", ylab = "Mean value of steps across all days, arb units", main = "The average number of steps taken in 5 minutes interval")
 ```
 
-```
-## Error in xy.coords(x, y, xlabel, ylabel, log): 'x' and 'y' lengths differ
-```
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
 
 The 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps
 
@@ -83,7 +80,13 @@ average[which(average$mean == max(average$mean)), ]
 ```
 
 ```
-## [1] 37.3826
+## Warning in max(average$mean): no non-missing arguments to max; returning
+## -Inf
+```
+
+```
+## [1] Group.1 x      
+## <0 rows> (or 0-length row.names)
 ```
 The data from this study include a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce bias into some calculations or summaries of the data. To exclude this bias, missing values will be replaced by the mean values of steps taken over all days for particular 5 minute interval.
 

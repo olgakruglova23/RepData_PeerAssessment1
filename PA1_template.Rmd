@@ -51,13 +51,12 @@ summarise(steps.by.day, mean = mean(x), median = median(x))
 
 Now, let us look at the average number of steps over time dependance.
 ```{r}
-by.interval <- group_by(without.NA, interval)
-average <- summarise(by.interval, mean = mean(steps))
+average <- aggregate(without.NA$steps, by = list(without.NA$interval), FUN  = sum)
 ```
 
 
 ```{r, echo = TRUE}
-plot(average$interval, average$mean, type = "l", xlab = "Time interval, s", ylab = "Mean value of steps across all days, arb units", main = "The average number of steps taken in 5 minutes interval")
+plot(average$Group.1, average$x, type = "l", xlab = "Time interval, s", ylab = "Mean value of steps across all days, arb units", main = "The average number of steps taken in 5 minutes interval")
 ```
 
 The 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps
